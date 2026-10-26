@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Layanan RT</string>
+    <string name="title_activity_main">Layanan RT</string>
+    <string name="package_name">com.capstone.rtapp</string>
+    <string name="custom_url_scheme">com.capstone.rtapp</string>
+</resources>

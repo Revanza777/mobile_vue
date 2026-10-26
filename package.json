@@ -9,12 +9,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@capacitor/android": "^8.5.3",
+    "@capacitor/core": "^8.5.3",
     "admin-lte": "^4.10.0",
     "bootstrap-icons": "^1.13.2",
     "vue": "^3.5.42",
     "vue-router": "^5.3.1"
   },
   "devDependencies": {
+    "@capacitor/cli": "^8.5.3",
     "@vitejs/plugin-vue": "^6.0.8",
     "vite": "^8.2.2",
     "vite-plugin-vue-devtools": "^8.2.1"
