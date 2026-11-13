@@ -1,126 +1,89 @@
-﻿<script setup>
-import { onMounted, onUnmounted, ref, watch } from 'vue'
-import { RouterLink, RouterView, useRoute } from 'vue-router'
+<script setup>
+import { computed } from 'vue'
+import { RouterLink, RouterView, useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
-const sidebarOpen = ref(false)
+const router = useRouter()
 
-function toggleSidebar() {
-  sidebarOpen.value = !sidebarOpen.value
+const role = computed(() => route.meta.role)
+
+const residentNavigation = [
+  { label: 'Beranda', icon: 'bi-house-door', to: '/warga/home', active: 'resident-home' },
+  { label: 'Surat', icon: 'bi-file-earmark-text', to: '/warga/surat', active: 'resident-letter' },
+  { label: 'Keluarga', icon: 'bi-people', to: '/warga/keluarga', active: 'resident-family' },
+  { label: 'Notifikasi', icon: 'bi-bell', to: '/warga/notifikasi', active: 'resident-notifications' },
+  { label: 'Profil', icon: 'bi-person', to: '/login', active: 'login' },
+]
+
+const rtNavigation = [
+  { label: 'Beranda', icon: 'bi-house-door', to: '/rt/home', active: 'rt-home' },
+  { label: 'Surat', icon: 'bi-file-earmark-text', to: '/rt/persetujuan', active: 'rt-approvals' },
+  { label: 'Keluarga', icon: 'bi-people', to: '/rt/perubahan-data', active: 'rt-data-review' },
+  { label: 'Iuran', icon: 'bi-receipt', to: '/rt/tagihan', active: 'rt-fee' },
+  { label: 'Profil', icon: 'bi-person', to: '/login', active: 'login' },
+]
+
+const navigation = computed(() => (role.value === 'rt' ? rtNavigation : residentNavigation))
+
+function goBack() {
+  if (window.history.state?.back) {
+    router.back()
+    return
+  }
+  router.push(role.value === 'rt' ? '/rt/home' : '/warga/home')
 }
-
-function closeSidebar() {
-  sidebarOpen.value = false
-}
-
-function onKeydown(event) {
-  if (event.key === 'Escape') closeSidebar()
-}
-
-watch(() => route.fullPath, closeSidebar)
-
-onMounted(() => {
-  document.body.classList.remove('sidebar-open')
-  document.addEventListener('keydown', onKeydown)
-})
-
-onUnmounted(() => {
-  document.body.classList.remove('sidebar-open')
-  document.removeEventListener('keydown', onKeydown)
-})
-
-watch(sidebarOpen, (isOpen) => {
-  document.body.classList.toggle('sidebar-open', isOpen)
-})
 </script>
 
 <template>
   <div class="app-wrapper">
-    <header class="app-header navbar navbar-expand bg-body">
-      <div class="container-fluid">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <button
-              class="nav-link"
-              type="button"
-              :aria-expanded="sidebarOpen"
-              aria-label="Buka atau tutup sidebar"
-              @click="toggleSidebar"
-            >
-              <i class="bi bi-list"></i>
-            </button>
-          </li>
-        </ul>
+    <header class="app-header">
+      <button
+        v-if="route.meta.showBack"
+        class="header-icon"
+        type="button"
+        aria-label="Kembali"
+        @click="goBack"
+      >
+        <i class="bi bi-arrow-left"></i>
+      </button>
+      <button
+        v-else
+        class="header-icon"
+        type="button"
+        aria-label="Buka notifikasi"
+        @click="router.push(role === 'rt' ? '/rt/persetujuan' : '/warga/notifikasi')"
+      >
+        <i class="bi bi-list"></i>
+      </button>
 
-        <RouterLink to="/" class="navbar-brand">
-          Layanan RT
-        </RouterLink>
-
-        <div class="ms-auto text-secondary small">
-          Prototype
-        </div>
-      </div>
+      <span class="header-title">{{ route.meta.title || 'Layanan RT' }}</span>
+      <button
+        v-if="route.meta.showBell"
+        class="header-icon"
+        type="button"
+        aria-label="Lihat notifikasi"
+        @click="router.push(role === 'rt' ? '/rt/persetujuan' : '/warga/notifikasi')"
+      >
+        <i class="bi bi-bell"></i>
+      </button>
+      <span v-else class="header-spacer"></span>
     </header>
 
-    <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
-      <div class="sidebar-brand">
-        <RouterLink to="/" class="brand-link">
-          <span class="brand-text fw-light">Layanan RT</span>
-        </RouterLink>
-      </div>
-
-      <div class="sidebar-wrapper">
-        <nav class="mt-2">
-          <ul
-            class="nav sidebar-menu flex-column"
-            role="navigation"
-            aria-label="Navigasi utama"
-          >
-            <li class="nav-item">
-              <RouterLink to="/" class="nav-link">
-                <i class="nav-icon bi bi-speedometer2"></i>
-                <p>Dashboard</p>
-              </RouterLink>
-            </li>
-
-            <li class="nav-item">
-              <a href="#" class="nav-link" @click.prevent>
-                <i class="nav-icon bi bi-envelope"></i>
-                <p>Pengajuan Surat</p>
-              </a>
-            </li>
-
-            <li class="nav-item">
-              <a href="#" class="nav-link" @click.prevent>
-                <i class="nav-icon bi bi-person-vcard"></i>
-                <p>Data Identitas</p>
-              </a>
-            </li>
-
-            <li class="nav-item">
-              <a href="#" class="nav-link" @click.prevent>
-                <i class="nav-icon bi bi-wallet2"></i>
-                <p>Kas RT</p>
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </div>
-    </aside>
-
-    <div
-      v-if="sidebarOpen"
-      class="sidebar-overlay"
-      aria-hidden="true"
-      @click="closeSidebar"
-    ></div>
-
-    <main class="app-main">
-      <div class="app-content">
-        <div class="container-fluid py-4">
-          <RouterView />
-        </div>
-      </div>
+    <main class="app-content">
+      <RouterView />
     </main>
+
+    <nav class="bottom-navigation" :aria-label="`Navigasi ${role === 'rt' ? 'RT' : 'Warga'}`">
+      <RouterLink
+        v-for="item in navigation"
+        :key="item.label"
+        :to="item.to"
+        class="bottom-navigation-item"
+        :class="{ active: route.path === item.to || route.path.startsWith(`${item.to}/`) }"
+      >
+        <i class="bi" :class="item.icon"></i>
+        <span>{{ item.label }}</span>
+      </RouterLink>
+    </nav>
   </div>
 </template>

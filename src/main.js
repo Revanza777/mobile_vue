@@ -2,6 +2,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'admin-lte/dist/css/adminlte.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'
+import './style.css'
 import App from './App.vue'
 import router from './router'
 
