@@ -43,7 +43,7 @@ function setStatus(status) {
       <span class="status-pill" :class="application.status === 'Disetujui' ? 'status-green' : application.status === 'Ditolak' ? 'status-red' : 'status-amber'">{{ application.status }}</span>
     </button>
 
-    <section v-if="selectedApplication && visibleApplications.length" class="content-card">
+    <section v-if="selectedApplication && visibleApplications.length" class="card content-card">
       <div class="section-heading"><h2>Detail Pengajuan Surat</h2><span class="status-pill status-amber">{{ selectedApplication.status }}</span></div>
       <div class="person-summary">
         <span class="avatar-initial">{{ selectedApplication.person.slice(0, 1) }}</span>

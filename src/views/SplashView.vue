@@ -25,7 +25,6 @@ onUnmounted(() => window.clearTimeout(timer))
       <span>Aplikasi RT</span>
     </div>
     <p>Bersama Membangun<br />Lingkungan yang Lebih Baik</p>
-    <div class="splash-progress" aria-hidden="true"><span></span></div>
     <button class="splash-skip" type="button" @click="continueToLogin">Mulai</button>
   </main>
 </template>

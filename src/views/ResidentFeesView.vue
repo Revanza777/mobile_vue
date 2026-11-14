@@ -27,7 +27,7 @@ const statusClass = computed(() => (allPaid.value ? 'status-green' : 'status-amb
     </nav>
 
     <div class="segmented-control"><button type="button" :class="{ selected: mode === 'Per Individu' }" @click="mode = 'Per Individu'">Per Individu</button><button type="button" :class="{ selected: mode === 'Per KK' }" @click="mode = 'Per KK'">Per KK</button></div>
-    <section class="content-card total-card">
+    <section class="card content-card total-card">
       <div class="card-heading">
         <span class="round-icon green-icon"><i class="bi bi-cash-stack" aria-hidden="true"></i></span>
         <div><h1>Total Kewajiban Keluarga</h1><p>Periode: Oktober 2025</p></div>
@@ -50,7 +50,7 @@ const statusClass = computed(() => (allPaid.value ? 'status-green' : 'status-amb
       <RouterLink to="/rt/iuran/saya/detail" class="text-action">Lihat detail tagihan individu <i class="bi bi-chevron-right" aria-hidden="true"></i></RouterLink>
     </section>
 
-    <section class="content-card">
+    <section class="card content-card">
       <div class="section-heading"><h2>Riwayat Pembayaran</h2></div>
       <div class="detail-pair"><span>20 Okt 2025 · Iuran Kebersihan</span><strong>{{ formatRupiah(25000) }} · Tunai</strong></div>
     </section>
@@ -58,18 +58,18 @@ const statusClass = computed(() => (allPaid.value ? 'status-green' : 'status-amb
   </div>
 
   <div v-else class="page-stack">
-    <section class="content-card">
+    <section class="card content-card">
       <div class="card-heading">
         <span class="avatar-initial">S</span>
         <div><h1>{{ resident.name }}</h1><p>{{ resident.nik }}</p></div>
       </div>
     </section>
-    <section class="content-card">
+    <section class="card content-card">
       <div class="section-heading"><h2>Rincian Tagihan</h2><span class="status-pill status-green">Lunas</span></div>
       <div class="detail-pair"><span>Iuran Keamanan (Per Individu)</span><strong>{{ formatRupiah(25000) }}</strong></div>
       <div class="detail-pair"><span>Periode</span><strong>Oktober 2025</strong></div>
     </section>
-    <section class="content-card">
+    <section class="card content-card">
       <div class="section-heading"><h2>Riwayat Pembayaran</h2></div>
       <div class="detail-pair"><span>20 Okt 2025</span><strong>{{ formatRupiah(25000) }} · Tunai</strong></div>
     </section>

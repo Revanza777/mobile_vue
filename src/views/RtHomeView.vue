@@ -8,7 +8,7 @@ const pendingChanges = demoState.dataChanges.filter((change) => change.status ==
 
 <template>
   <div class="page-stack">
-    <section class="welcome-card rt-welcome">
+    <section class="welcome-card">
       <div>
         <span class="eyebrow">Selamat pagi,</span>
         <h1>Ketua RT</h1>

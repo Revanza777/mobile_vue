@@ -84,7 +84,7 @@ function submitApplication() {
   </div>
 
   <form v-else-if="screen === 'resident-letter-form'" class="page-stack" @submit.prevent="submitApplication">
-    <section class="content-card">
+    <section class="card content-card">
       <div class="card-heading">
         <span class="round-icon red-icon"><i class="bi bi-file-earmark-text" aria-hidden="true"></i></span>
         <div><h1>Surat Keterangan Domisili</h1><p>Surat yang menyatakan alamat tempat tinggal sementara.</p></div>
@@ -112,7 +112,7 @@ function submitApplication() {
     <RouterLink v-for="application in historyItems" :key="application.id" :to="{ path: '/rt/surat/saya/detail', query: { id: application.id } }" class="history-row">
       <span class="round-icon red-icon"><i class="bi bi-file-earmark-text" aria-hidden="true"></i></span>
       <span class="person-copy"><strong>{{ application.name }}</strong><small>No. {{ application.id }} · {{ application.date }}</small></span>
-      <span class="status-pill" :class="application.status === 'Disetujui' ? 'status-green' : 'status-amber'">{{ application.status }}</span>
+      <span class="status-pill" :class="application.status === 'Disetujui' ? 'status-green' : 'status-amber'">{{ application.status === 'Menunggu Verifikasi' ? 'Menunggu' : application.status }}</span>
       <i class="bi bi-chevron-right" aria-hidden="true"></i>
     </RouterLink>
     <p v-if="historyItems.length === 0" class="empty-state">Belum ada pengajuan pada status ini.</p>
@@ -120,14 +120,14 @@ function submitApplication() {
   </div>
 
   <div v-else-if="screen === 'resident-letter-detail'" class="page-stack">
-    <section class="content-card">
+    <section class="card content-card">
       <div class="card-heading">
         <span class="round-icon red-icon"><i class="bi bi-file-earmark-text" aria-hidden="true"></i></span>
         <div><h1>{{ selectedApplication?.name }}</h1><p>No. {{ selectedApplication?.id }} · {{ selectedApplication?.date }}</p></div>
       </div>
     </section>
     <div class="status-banner"><i class="bi bi-clock-history" aria-hidden="true"></i><span><strong>{{ selectedApplication?.status }}</strong><small>Pengajuan ini sedang ditinjau pada tampilan demo.</small></span></div>
-    <section class="content-card">
+    <section class="card content-card">
       <div class="section-heading"><h2>Data Pengajuan</h2></div>
       <div class="detail-pair"><span>Nama Pemohon</span><strong>{{ selectedApplication?.applicant }}</strong></div>
       <div class="detail-pair"><span>NIK</span><strong>{{ selectedApplication?.nik }}</strong></div>
@@ -140,7 +140,7 @@ function submitApplication() {
   </div>
 
   <div v-else class="page-stack">
-    <section class="letter-preview content-card">
+    <section class="card letter-preview content-card">
       <div class="letter-emblem"><i class="bi bi-shield-fill" aria-hidden="true"></i></div>
       <p class="letter-kicker">PEMERINTAH DESA<br />KECAMATAN SETEMPAT</p>
       <hr />

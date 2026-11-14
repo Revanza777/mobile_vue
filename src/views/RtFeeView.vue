@@ -32,7 +32,7 @@ function publishInvoice() {
       <RouterLink to="/rt/iuran/kelola" class="nav-link" active-class="active">Kelola Iuran RT</RouterLink>
     </nav>
 
-    <section class="content-card form-card">
+    <section class="card content-card form-card">
       <label class="form-label" for="fee-kind">Jenis Iuran <span class="required">*</span></label>
       <select id="fee-kind" v-model="feeType" class="form-select">
         <option>Iuran Kebersihan</option>
@@ -66,7 +66,7 @@ function publishInvoice() {
       <small class="form-hint text-end">{{ note.length }}/200</small>
     </section>
 
-    <section class="content-card invoice-summary">
+    <section class="card content-card invoice-summary">
       <h2><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Ringkasan</h2>
       <strong>{{ feeType }} · {{ targetType }}</strong>
       <span>{{ formatRupiah(total) }} · {{ period }} {{ year }}</span>

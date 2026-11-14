@@ -45,7 +45,7 @@ function deactivateAccount() {
 
 <template>
   <div class="page-stack">
-    <section class="content-card">
+    <section class="card content-card">
       <div class="card-heading">
         <span class="avatar-initial">{{ initial }}</span>
         <div>

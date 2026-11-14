@@ -31,10 +31,10 @@ function updateChange(status) {
     <button v-for="change in visibleChanges" :key="change.id" type="button" class="history-row history-button" :class="{ 'row-selected': selectedId === change.id }" @click="selectedId = change.id; message = ''">
       <span class="round-icon red-icon"><i class="bi bi-person-vcard" aria-hidden="true"></i></span>
       <span class="person-copy"><strong>{{ change.change }}</strong><small>{{ change.person }} · {{ change.date }}</small></span>
-      <span class="status-pill" :class="change.status === 'Disetujui' ? 'status-green' : change.status === 'Ditolak' ? 'status-red' : 'status-amber'">{{ change.status === 'Menunggu Verifikasi' ? 'Menunggu Verifikasi' : change.status }}</span>
+      <span class="status-pill" :class="change.status === 'Disetujui' ? 'status-green' : change.status === 'Ditolak' ? 'status-red' : 'status-amber'">{{ change.status === 'Menunggu Verifikasi' ? 'Menunggu' : change.status }}</span>
     </button>
 
-    <section v-if="selectedChange && visibleChanges.length" class="content-card">
+    <section v-if="selectedChange && visibleChanges.length" class="card content-card">
       <div class="section-heading"><h2>Detail Peninjauan Perubahan Data</h2><span class="status-pill status-amber">{{ selectedChange.status }}</span></div>
       <div class="person-summary"><span class="avatar-initial">{{ selectedChange.person.slice(0, 1) }}</span><span class="person-copy"><strong>{{ selectedChange.person }}</strong><small>NIK {{ selectedChange.nik }} · RT 04 / RW 02</small></span></div>
       <div class="detail-pair"><span>Jenis Perubahan</span><strong>{{ selectedChange.change }}</strong></div>

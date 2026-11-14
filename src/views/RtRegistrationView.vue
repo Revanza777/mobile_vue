@@ -73,7 +73,7 @@ function decide(status) {
       <RouterLink to="/rt/warga/perubahan-data" class="nav-link" active-class="active">Perubahan Data</RouterLink>
     </nav>
 
-    <section class="content-card">
+    <section class="card content-card">
       <div class="card-heading">
         <span class="round-icon red-icon"><i class="bi bi-person-plus" aria-hidden="true"></i></span>
         <div>
@@ -117,7 +117,7 @@ function decide(status) {
           class="status-pill"
           :class="registration.status === 'Disetujui' ? 'status-green' : registration.status === 'Ditolak' ? 'status-red' : 'status-amber'"
         >
-          {{ registration.status }}
+          {{ registration.status === 'Menunggu Konfirmasi' ? 'Menunggu' : registration.status }}
         </span>
       </button>
 
@@ -125,7 +125,7 @@ function decide(status) {
         Tidak ada pendaftaran contoh dengan status ini. Pendaftaran dari aplikasi warga belum terhubung.
       </p>
 
-      <section v-if="selectedRegistration && selectedIsVisible" class="content-card registration-detail">
+      <section v-if="selectedRegistration && selectedIsVisible" class="card content-card registration-detail">
         <div class="section-heading">
           <h2>Detail Pendaftar</h2>
           <span class="status-pill status-amber">Data contoh</span>

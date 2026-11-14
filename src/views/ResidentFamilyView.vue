@@ -4,7 +4,7 @@ import { familyMembers, resident } from '../data/demoData'
 
 <template>
   <div class="page-stack">
-    <section class="content-card">
+    <section class="card content-card">
       <div class="card-heading">
         <span class="round-icon red-icon"><i class="bi bi-person-vcard" aria-hidden="true"></i></span>
         <div><h1>Data KK</h1><p>No. KK {{ resident.familyNumber }}</p></div>
