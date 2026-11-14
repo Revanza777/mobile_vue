@@ -51,7 +51,7 @@
 }
 
 body {
-  min-width: 320px;
+  min-width: 0;
   min-height: 100vh;
   margin: 0;
   background: var(--rt-bg);
@@ -68,6 +68,22 @@ textarea {
 
 button {
   -webkit-tap-highlight-color: transparent;
+}
+
+label,
+a[href],
+button:not(:disabled),
+select:not(:disabled),
+input[type="checkbox"]:not(:disabled),
+input[type="radio"]:not(:disabled) {
+  cursor: pointer;
+}
+
+button:disabled,
+select:disabled,
+input:disabled,
+textarea:disabled {
+  cursor: not-allowed;
 }
 
 a {
@@ -1134,64 +1150,165 @@ textarea.form-control {
 }
 
 .login-screen {
-  justify-content: flex-start;
-  padding-top: max(38px, 8vh);
-  background:
-    radial-gradient(ellipse at bottom, rgb(126 163 102 / 15%), transparent 36%),
-    var(--rt-bg-screen);
+  justify-content: center;
+  padding: max(24px, env(safe-area-inset-top)) 20px max(24px, env(safe-area-inset-bottom));
+  background: var(--rt-bg-screen);
+}
+
+.login-content {
+  width: 100%;
+  max-width: 430px;
+  margin-block: auto;
 }
 
 .login-brand {
-  margin: 0 auto 30px;
+  margin: 0 auto 18px;
 }
 
 .login-panel {
   width: 100%;
-  padding: 17px;
-  border: 1px solid var(--rt-border-soft);
-  border-radius: 15px;
+  margin: 0;
+  border-color: var(--rt-border-soft);
   background: var(--rt-surface-soft);
-  box-shadow: 0 6px 20px rgb(60 43 24 / 6%);
+}
+
+.login-panel .card-body {
+  padding: 18px;
 }
 
 .login-panel h1 {
   margin: 0 0 5px;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 750;
 }
 
 .login-panel .muted-copy {
   margin: 0 0 15px;
+  color: #625c52;
+  font-size: 13px;
+  line-height: 1.5;
 }
 
-.login-panel .form-label {
-  margin: 10px 0 5px;
-  font-size: var(--fs-small);
+.login-panel .status-banner strong {
+  font-size: 13px;
+}
+
+.login-panel .status-banner small {
+  font-size: 12px;
+}
+
+.device-code-block {
+  padding: 10px 12px;
+  border: 1px solid var(--rt-border-field);
+  border-radius: 9px;
+  background: var(--rt-bg-screen);
+}
+
+.device-code-block .form-label {
+  display: block;
+  margin: 0 0 5px;
+  font-size: 12px;
   font-weight: 650;
 }
 
-.remember-option {
-  display: flex;
-  align-items: center;
-  gap: 5px;
+.device-code-block code {
+  display: block;
+  overflow-wrap: anywhere;
+  color: var(--rt-maroon);
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: clamp(14px, 3.8vw, 16px);
+  font-weight: 700;
+  user-select: all;
 }
 
-.remember-option input {
-  accent-color: var(--rt-maroon);
-}
-
-.demo-access {
-  display: flex;
-  flex-direction: column;
+.device-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
-  margin-top: 18px;
 }
 
-.demo-disclaimer {
-  margin: 13px 0 0;
-  color: #70695d;
-  font-size: var(--fs-caption);
+.device-actions .btn {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 8px 10px;
+  font-size: 13px;
+  line-height: 1.25;
+  white-space: normal;
+}
+
+.device-action-primary,
+.device-action-check {
+  grid-column: 1 / -1;
+}
+
+.login-panel .btn:focus-visible {
+  outline: 3px solid var(--rt-green);
+  outline-offset: 2px;
+  box-shadow: none;
+}
+
+.login-panel .btn-outline-brand:hover:not(:disabled) {
+  color: var(--rt-maroon);
+  background: #f2ead5;
+}
+
+.login-panel .btn:active:not(:disabled) {
+  filter: brightness(0.9);
+}
+
+.login-panel .btn:disabled {
+  opacity: 0.55;
+}
+
+.activation-steps {
+  display: grid;
+  gap: 7px;
+  margin-top: 18px;
+  padding-left: 20px;
+  color: var(--rt-ink);
+  font-size: 13px;
   line-height: 1.5;
+}
+
+.activation-steps li {
+  padding-left: 2px;
+}
+
+.device-demo-entry {
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  margin-top: 16px;
+  font-size: 13px;
+}
+
+.device-demo-note {
+  margin-top: 7px;
+  color: #625c52;
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.device-feedback-warning {
+  border-color: var(--rt-warn-border);
+  color: #87530b;
+  background: #fff4db;
+}
+
+.login-panel .local-result {
+  font-size: 12px;
+}
+
+.login-note {
+  margin-top: 12px;
+  color: #625c52;
+  font-size: 12px;
   text-align: center;
 }
 
