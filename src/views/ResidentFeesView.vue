@@ -7,6 +7,16 @@ const route = useRoute()
 const isDetail = computed(() => route.name === 'resident-fee-detail')
 const mode = ref('Per Individu')
 const total = computed(() => demoState.bills.reduce((sum, bill) => sum + bill.amount, 0))
+
+const paidCount = computed(() => demoState.bills.filter((bill) => bill.paid).length)
+const allPaid = computed(() => demoState.bills.length > 0 && paidCount.value === demoState.bills.length)
+const statusLabel = computed(() => {
+  if (demoState.bills.length === 0) return 'Belum ada tagihan'
+  if (allPaid.value) return 'Lunas'
+  if (paidCount.value === 0) return 'Belum lunas'
+  return 'Lunas sebagian'
+})
+const statusClass = computed(() => (allPaid.value ? 'status-green' : 'status-amber'))
 </script>
 
 <template>
@@ -16,7 +26,7 @@ const total = computed(() => demoState.bills.reduce((sum, bill) => sum + bill.am
       <div class="card-heading">
         <span class="round-icon green-icon"><i class="bi bi-cash-stack"></i></span>
         <div><h1>Total Kewajiban Keluarga</h1><p>Periode: Oktober 2025</p></div>
-        <span class="status-pill status-green">Lunas sebagian</span>
+        <span class="status-pill" :class="statusClass">{{ statusLabel }}</span>
       </div>
       <strong class="amount-large">{{ formatRupiah(total) }}</strong>
     </section>
