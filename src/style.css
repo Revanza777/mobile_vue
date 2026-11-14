@@ -564,7 +564,8 @@ a {
 }
 
 .filter-tabs,
-.segmented-control {
+.segmented-control,
+.module-switch {
   display: flex;
   gap: 4px;
   padding: 3px;
@@ -575,21 +576,75 @@ a {
 
 .filter-tabs button,
 .segmented-control button {
+  min-height: 44px;
   min-width: 0;
   flex: 1;
   padding: 8px 5px;
   border: 0;
   border-radius: 9px;
-  color: #716b60;
+  color: #6f695f;
   background: transparent;
   font-size: var(--fs-caption);
 }
 
+.filter-tabs button:hover:not(.selected) {
+  color: var(--rt-maroon);
+  background: var(--rt-surface-soft);
+}
+
+.filter-tabs button.selected:hover {
+  background: var(--rt-forest);
+}
+
+.filter-tabs button:active,
+.history-button:active {
+  filter: brightness(0.94);
+}
+
+.filter-tabs button:focus-visible,
+.history-button:focus-visible {
+  outline: 3px solid var(--rt-green);
+  outline-offset: 2px;
+}
+
+.module-switch .nav-link {
+  display: flex;
+  min-width: 0;
+  min-height: 44px;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 5px;
+  border-radius: 9px;
+  color: #6f695f;
+  font-size: var(--fs-caption);
+  text-align: center;
+}
+
 .filter-tabs button.selected,
-.segmented-control button.selected {
+.segmented-control button.selected,
+.module-switch .nav-link.active {
   color: white;
   background: var(--rt-maroon);
   font-weight: 700;
+}
+
+.module-switch .nav-link:hover {
+  color: var(--rt-maroon);
+}
+
+.module-switch .nav-link.active:hover {
+  color: white;
+  background: var(--rt-forest);
+}
+
+.module-switch .nav-link:active {
+  filter: brightness(0.9);
+}
+
+.module-switch .nav-link:focus-visible {
+  outline: 3px solid var(--rt-green);
+  outline-offset: 1px;
 }
 
 .history-row {
@@ -656,7 +711,8 @@ textarea.form-control {
 .btn-brand,
 .btn-outline-brand,
 .btn-approve,
-.btn-reject {
+.btn-reject,
+.btn-deactivate {
   min-height: 39px;
   border-radius: 9px;
   font-size: var(--fs-body-sm);
@@ -971,10 +1027,86 @@ textarea.form-control {
   background: var(--rt-maroon);
 }
 
+.btn-deactivate {
+  min-height: 44px;
+  border: 1px solid #8e2222;
+  color: #fff;
+  background: #8e2222;
+}
+
 .btn-approve:hover,
-.btn-reject:hover {
+.btn-reject:hover,
+.btn-deactivate:hover {
   color: white;
   filter: brightness(0.93);
+}
+
+.btn-deactivate:active {
+  filter: brightness(0.86);
+}
+
+.registration-detail .btn-approve,
+.registration-detail .btn-reject {
+  min-height: 44px;
+}
+
+.registration-page .content-card p,
+.registration-page .local-note,
+.registration-page .detail-pair span,
+.registration-page .person-copy small,
+.registration-page .empty-state {
+  color: #625c52;
+}
+
+.registration-page .registration-detail .detail-pair strong {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.account-dialog {
+  width: min(430px, calc(100vw - 28px));
+  max-width: calc(100vw - 28px);
+  padding: 0;
+  border: 1px solid var(--rt-border-soft);
+  border-radius: 13px;
+  color: var(--rt-ink);
+  background: var(--rt-surface-soft);
+}
+
+.account-dialog::backdrop {
+  background: rgb(48 44 37 / 58%);
+}
+
+.account-dialog-body {
+  padding: 20px;
+}
+
+.account-dialog h2 {
+  margin: 0 0 8px;
+  font-size: var(--fs-title);
+  font-weight: 750;
+}
+
+.account-dialog p {
+  margin: 0 0 14px;
+  color: #625c52;
+  font-size: var(--fs-body-sm);
+  line-height: 1.5;
+}
+
+.account-dialog .alert {
+  margin-bottom: 12px;
+}
+
+.account-dialog .btn-outline-brand,
+.account-dialog .btn-deactivate {
+  min-height: 44px;
+}
+
+.account-dialog button:focus-visible,
+.btn-deactivate:focus-visible {
+  outline: 3px solid var(--rt-green);
+  outline-offset: 2px;
 }
 
 .person-summary,

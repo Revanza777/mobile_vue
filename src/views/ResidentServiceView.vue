@@ -17,6 +17,7 @@ const serviceSearch = ref('')
 
 const screen = computed(() => route.name)
 const selectedApplication = computed(() => demoState.applications.find((item) => item.id === route.query.id) || demoState.applications[0])
+// TODO: Implement request flows before offering the remaining letter types.
 const serviceTypes = [
   'Surat Keterangan Domisili',
   'Surat Keterangan Usaha',
@@ -51,36 +52,41 @@ function submitApplication() {
     date: 'Baru saja',
     status: 'Menunggu Verifikasi',
   })
-  router.push('/warga/surat/history')
+  router.push('/rt/surat/saya/history')
 }
 </script>
 
 <template>
   <div v-if="screen === 'resident-letter'" class="page-stack">
+    <nav class="module-switch" aria-label="Bagian surat">
+      <RouterLink to="/rt/surat/masuk" class="nav-link" active-class="active">Pemeriksaan RT</RouterLink>
+      <RouterLink to="/rt/surat/saya" class="nav-link" active-class="active">Surat Saya</RouterLink>
+    </nav>
+
     <label class="search-field">
-      <i class="bi bi-search"></i>
+      <i class="bi bi-search" aria-hidden="true"></i>
       <input v-model="serviceSearch" aria-label="Cari jenis surat" placeholder="Cari jenis surat..." />
     </label>
 
     <template v-for="label in visibleServiceTypes" :key="label">
-      <RouterLink v-if="label === 'Surat Keterangan Domisili'" to="/warga/surat/form" class="service-row">
-        <span class="round-icon red-icon"><i class="bi bi-file-earmark-text"></i></span>
+      <RouterLink v-if="label === 'Surat Keterangan Domisili'" to="/rt/surat/saya/form" class="service-row">
+        <span class="round-icon red-icon"><i class="bi bi-file-earmark-text" aria-hidden="true"></i></span>
         <span class="person-copy"><strong>{{ label }}</strong><small>Surat yang menyatakan alamat tempat tinggal sementara.</small></span>
-        <i class="bi bi-chevron-right"></i>
+        <i class="bi bi-chevron-right" aria-hidden="true"></i>
       </RouterLink>
       <div v-else class="service-row">
-        <span class="round-icon red-icon"><i class="bi bi-file-earmark-text"></i></span>
-        <span class="person-copy"><strong>{{ label }}</strong><small>Formulir layanan surat RT.</small></span>
+        <span class="round-icon red-icon"><i class="bi bi-file-earmark-text" aria-hidden="true"></i></span>
+        <span class="person-copy"><strong>{{ label }}</strong><small>Belum tersedia di prototipe.</small></span>
       </div>
     </template>
     <p v-if="visibleServiceTypes.length === 0" class="empty-state">Jenis surat tidak ditemukan.</p>
-    <RouterLink to="/warga/surat/history" class="text-action">Riwayat Pengajuan Surat <i class="bi bi-chevron-right"></i></RouterLink>
+    <RouterLink to="/rt/surat/saya/history" class="text-action">Riwayat Pengajuan Surat <i class="bi bi-chevron-right" aria-hidden="true"></i></RouterLink>
   </div>
 
   <form v-else-if="screen === 'resident-letter-form'" class="page-stack" @submit.prevent="submitApplication">
     <section class="content-card">
       <div class="card-heading">
-        <span class="round-icon red-icon"><i class="bi bi-file-earmark-text"></i></span>
+        <span class="round-icon red-icon"><i class="bi bi-file-earmark-text" aria-hidden="true"></i></span>
         <div><h1>Surat Keterangan Domisili</h1><p>Surat yang menyatakan alamat tempat tinggal sementara.</p></div>
       </div>
       <div class="form-section-title">Data Pemohon</div>
@@ -94,33 +100,33 @@ function submitApplication() {
       <input id="application-purpose" v-model="form.purpose" class="form-control" required placeholder="Tuliskan keperluan" />
       <label class="form-label" for="application-note">Keterangan Tambahan</label>
       <textarea id="application-note" v-model="form.note" class="form-control" rows="2" placeholder="Tulis keterangan tambahan"></textarea>
-      <button class="btn btn-brand w-100 mt-3" type="submit"><i class="bi bi-send"></i> Ajukan Surat (demo)</button>
+      <button class="btn btn-brand w-100 mt-3" type="submit"><i class="bi bi-send" aria-hidden="true"></i> Ajukan Surat (demo)</button>
     </section>
-    <p class="local-note"><i class="bi bi-info-circle"></i> Pengajuan hanya disimulasikan dan tidak dikirim ke server.</p>
+    <p class="local-note"><i class="bi bi-info-circle" aria-hidden="true"></i> Pengajuan hanya disimulasikan dan tidak dikirim ke server.</p>
   </form>
 
   <div v-else-if="screen === 'resident-letter-history'" class="page-stack">
     <div class="filter-tabs">
       <button v-for="item in ['Semua', 'Diproses', 'Disetujui', 'Ditolak']" :key="item" type="button" :class="{ selected: filter === item }" @click="filter = item">{{ item }}</button>
     </div>
-    <RouterLink v-for="application in historyItems" :key="application.id" :to="{ path: '/warga/surat/detail', query: { id: application.id } }" class="history-row">
-      <span class="round-icon red-icon"><i class="bi bi-file-earmark-text"></i></span>
+    <RouterLink v-for="application in historyItems" :key="application.id" :to="{ path: '/rt/surat/saya/detail', query: { id: application.id } }" class="history-row">
+      <span class="round-icon red-icon"><i class="bi bi-file-earmark-text" aria-hidden="true"></i></span>
       <span class="person-copy"><strong>{{ application.name }}</strong><small>No. {{ application.id }} · {{ application.date }}</small></span>
       <span class="status-pill" :class="application.status === 'Disetujui' ? 'status-green' : 'status-amber'">{{ application.status }}</span>
-      <i class="bi bi-chevron-right"></i>
+      <i class="bi bi-chevron-right" aria-hidden="true"></i>
     </RouterLink>
     <p v-if="historyItems.length === 0" class="empty-state">Belum ada pengajuan pada status ini.</p>
-    <p class="local-note"><i class="bi bi-info-circle"></i> Riwayat ini hanya tersimpan sementara selama prototipe dibuka.</p>
+    <p class="local-note"><i class="bi bi-info-circle" aria-hidden="true"></i> Riwayat ini hanya tersimpan sementara selama prototipe dibuka.</p>
   </div>
 
   <div v-else-if="screen === 'resident-letter-detail'" class="page-stack">
     <section class="content-card">
       <div class="card-heading">
-        <span class="round-icon red-icon"><i class="bi bi-file-earmark-text"></i></span>
+        <span class="round-icon red-icon"><i class="bi bi-file-earmark-text" aria-hidden="true"></i></span>
         <div><h1>{{ selectedApplication?.name }}</h1><p>No. {{ selectedApplication?.id }} · {{ selectedApplication?.date }}</p></div>
       </div>
     </section>
-    <div class="status-banner"><i class="bi bi-clock-history"></i><span><strong>{{ selectedApplication?.status }}</strong><small>Pengajuan ini sedang ditinjau pada tampilan demo.</small></span></div>
+    <div class="status-banner"><i class="bi bi-clock-history" aria-hidden="true"></i><span><strong>{{ selectedApplication?.status }}</strong><small>Pengajuan ini sedang ditinjau pada tampilan demo.</small></span></div>
     <section class="content-card">
       <div class="section-heading"><h2>Data Pengajuan</h2></div>
       <div class="detail-pair"><span>Nama Pemohon</span><strong>{{ selectedApplication?.applicant }}</strong></div>
@@ -129,13 +135,13 @@ function submitApplication() {
       <div class="detail-pair"><span>Alamat</span><strong>{{ selectedApplication?.address || resident.address }}</strong></div>
       <div class="detail-pair"><span>Keperluan</span><strong>Administrasi</strong></div>
     </section>
-    <button class="btn btn-brand w-100" type="button" @click="router.push({ path: '/warga/surat/preview', query: { id: selectedApplication?.id } })">Lihat Preview Surat</button>
-    <p class="local-note"><i class="bi bi-info-circle"></i> Status dan data bukan hasil verifikasi RT sungguhan.</p>
+    <button class="btn btn-brand w-100" type="button" @click="router.push({ path: '/rt/surat/saya/preview', query: { id: selectedApplication?.id } })">Lihat Preview Surat</button>
+    <p class="local-note"><i class="bi bi-info-circle" aria-hidden="true"></i> Status dan data bukan hasil verifikasi RT sungguhan.</p>
   </div>
 
   <div v-else class="page-stack">
     <section class="letter-preview content-card">
-      <div class="letter-emblem"><i class="bi bi-shield-fill"></i></div>
+      <div class="letter-emblem"><i class="bi bi-shield-fill" aria-hidden="true"></i></div>
       <p class="letter-kicker">PEMERINTAH DESA<br />KECAMATAN SETEMPAT</p>
       <hr />
       <h1>SURAT KETERANGAN DOMISILI</h1>
@@ -148,6 +154,6 @@ function submitApplication() {
       <p>Adalah benar bertempat tinggal pada alamat tersebut.</p>
       <div class="letter-signature">Contoh tampilan surat<br /><strong>Ketua RT (demo)</strong></div>
     </section>
-    <p class="local-note"><i class="bi bi-info-circle"></i> Pratinjau ilustratif, bukan surat resmi atau dokumen yang disahkan.</p>
+    <p class="local-note"><i class="bi bi-info-circle" aria-hidden="true"></i> Pratinjau ilustratif, bukan surat resmi atau dokumen yang disahkan.</p>
   </div>
 </template>

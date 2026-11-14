@@ -21,10 +21,15 @@ const statusClass = computed(() => (allPaid.value ? 'status-green' : 'status-amb
 
 <template>
   <div v-if="!isDetail" class="page-stack">
+    <nav class="module-switch" aria-label="Bagian iuran">
+      <RouterLink to="/rt/iuran/saya" class="nav-link" active-class="active">Iuran Saya</RouterLink>
+      <RouterLink to="/rt/iuran/kelola" class="nav-link" active-class="active">Kelola Iuran RT</RouterLink>
+    </nav>
+
     <div class="segmented-control"><button type="button" :class="{ selected: mode === 'Per Individu' }" @click="mode = 'Per Individu'">Per Individu</button><button type="button" :class="{ selected: mode === 'Per KK' }" @click="mode = 'Per KK'">Per KK</button></div>
     <section class="content-card total-card">
       <div class="card-heading">
-        <span class="round-icon green-icon"><i class="bi bi-cash-stack"></i></span>
+        <span class="round-icon green-icon"><i class="bi bi-cash-stack" aria-hidden="true"></i></span>
         <div><h1>Total Kewajiban Keluarga</h1><p>Periode: Oktober 2025</p></div>
         <span class="status-pill" :class="statusClass">{{ statusLabel }}</span>
       </div>
@@ -34,7 +39,7 @@ const statusClass = computed(() => (allPaid.value ? 'status-green' : 'status-amb
     <section>
       <div class="section-heading"><h2>Rincian Iuran</h2></div>
       <article v-for="bill in demoState.bills" :key="bill.id" class="bill-row">
-        <span class="round-icon" :class="bill.paid ? 'green-icon' : 'red-icon'"><i class="bi bi-receipt"></i></span>
+        <span class="round-icon" :class="bill.paid ? 'green-icon' : 'red-icon'"><i class="bi bi-receipt" aria-hidden="true"></i></span>
         <span class="person-copy">
           <strong>{{ bill.name }} ({{ bill.unit }})</strong>
           <small v-if="mode === 'Per Individu' && bill.unitAmount">{{ bill.period }} · {{ formatRupiah(bill.unitAmount) }} × {{ bill.quantity }} warga = {{ formatRupiah(bill.amount) }}</small>
@@ -42,14 +47,14 @@ const statusClass = computed(() => (allPaid.value ? 'status-green' : 'status-amb
         </span>
         <span class="status-pill" :class="bill.paid ? 'status-green' : 'status-amber'">{{ bill.paid ? 'Lunas' : 'Belum' }}</span>
       </article>
-      <RouterLink to="/warga/iuran/detail" class="text-action">Lihat detail tagihan individu <i class="bi bi-chevron-right"></i></RouterLink>
+      <RouterLink to="/rt/iuran/saya/detail" class="text-action">Lihat detail tagihan individu <i class="bi bi-chevron-right" aria-hidden="true"></i></RouterLink>
     </section>
 
     <section class="content-card">
       <div class="section-heading"><h2>Riwayat Pembayaran</h2></div>
       <div class="detail-pair"><span>20 Okt 2025 · Iuran Kebersihan</span><strong>{{ formatRupiah(25000) }} · Tunai</strong></div>
     </section>
-    <p class="local-note"><i class="bi bi-info-circle"></i> Tampilan rincian saja; pembayaran tidak diproses di prototipe.</p>
+    <p class="local-note"><i class="bi bi-info-circle" aria-hidden="true"></i> Tampilan rincian saja; pembayaran tidak diproses di prototipe.</p>
   </div>
 
   <div v-else class="page-stack">
@@ -68,7 +73,7 @@ const statusClass = computed(() => (allPaid.value ? 'status-green' : 'status-amb
       <div class="section-heading"><h2>Riwayat Pembayaran</h2></div>
       <div class="detail-pair"><span>20 Okt 2025</span><strong>{{ formatRupiah(25000) }} · Tunai</strong></div>
     </section>
-    <div class="payment-info"><i class="bi bi-shield-check"></i><span><strong>Detail Tagihan Individu</strong><small>Hanya dapat diakses oleh pemiliknya.</small></span></div>
-    <p class="local-note"><i class="bi bi-info-circle"></i> Informasi pembayaran ini hanya contoh lokal.</p>
+    <div class="payment-info"><i class="bi bi-shield-check" aria-hidden="true"></i><span><strong>Detail Tagihan Individu</strong><small>Hanya dapat diakses oleh pemiliknya.</small></span></div>
+    <p class="local-note"><i class="bi bi-info-circle" aria-hidden="true"></i> Informasi pembayaran ini hanya contoh lokal.</p>
   </div>
 </template>

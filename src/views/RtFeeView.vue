@@ -1,5 +1,6 @@
 <script setup>
 import { computed, ref } from 'vue'
+import { RouterLink } from 'vue-router'
 import { demoState, formatRupiah } from '../data/demoData'
 
 const targetType = ref('Per Individu')
@@ -26,6 +27,11 @@ function publishInvoice() {
 
 <template>
   <form class="page-stack" @submit.prevent="publishInvoice">
+    <nav class="module-switch" aria-label="Bagian iuran">
+      <RouterLink to="/rt/iuran/saya" class="nav-link" active-class="active">Iuran Saya</RouterLink>
+      <RouterLink to="/rt/iuran/kelola" class="nav-link" active-class="active">Kelola Iuran RT</RouterLink>
+    </nav>
+
     <section class="content-card form-card">
       <label class="form-label" for="fee-kind">Jenis Iuran <span class="required">*</span></label>
       <select id="fee-kind" v-model="feeType" class="form-select">
@@ -51,7 +57,7 @@ function publishInvoice() {
         <label><input v-model="recipient" type="radio" value="Seluruh Warga" /> <span><strong>Seluruh Warga</strong><small>Tagihan akan dibuat untuk warga yang memenuhi ketentuan.</small></span></label>
         <label><input v-model="recipient" type="radio" value="Warga Tertentu" /> <span><strong>Pilih Warga atau KK</strong><small>Pilih warga/KK tertentu yang akan ditagih.</small></span></label>
       </fieldset>
-      <p v-if="recipient === 'Warga Tertentu'" class="local-note"><i class="bi bi-info-circle"></i> Pilihan warga/KK tertentu belum tersedia pada prototipe.</p>
+      <p v-if="recipient === 'Warga Tertentu'" class="local-note"><i class="bi bi-info-circle" aria-hidden="true"></i> Pilihan warga/KK tertentu belum tersedia pada prototipe.</p>
 
       <label class="form-label" for="fee-due">Jatuh Tempo <span class="required">*</span></label>
       <input id="fee-due" v-model="dueDate" class="form-control" type="date" required />
@@ -61,13 +67,13 @@ function publishInvoice() {
     </section>
 
     <section class="content-card invoice-summary">
-      <h2><i class="bi bi-check-circle-fill"></i> Ringkasan</h2>
+      <h2><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Ringkasan</h2>
       <strong>{{ feeType }} · {{ targetType }}</strong>
       <span>{{ formatRupiah(total) }} · {{ period }} {{ year }}</span>
       <small>Data penerima tidak diproses untuk penagihan sungguhan.</small>
     </section>
-    <button class="btn btn-brand w-100" type="submit"><i class="bi bi-send"></i> Simulasikan Terbitkan Tagihan</button>
+    <button class="btn btn-brand w-100" type="submit"><i class="bi bi-send" aria-hidden="true"></i> Simulasikan Terbitkan Tagihan</button>
     <div v-if="message" class="local-result" role="status">{{ message }}</div>
-    <p class="local-note"><i class="bi bi-info-circle"></i> Tombol hanya menampilkan hasil simulasi lokal; tidak ada tagihan yang diterbitkan atau disimpan ke server.</p>
+    <p class="local-note"><i class="bi bi-info-circle" aria-hidden="true"></i> Tombol hanya menampilkan hasil simulasi lokal; tidak ada tagihan yang diterbitkan atau disimpan ke server.</p>
   </form>
 </template>

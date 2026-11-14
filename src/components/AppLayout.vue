@@ -1,36 +1,27 @@
 <script setup>
-import { computed } from 'vue'
 import { RouterLink, RouterView, useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
 const router = useRouter()
 
-const role = computed(() => route.meta.role)
-
-const residentNavigation = [
-  { label: 'Beranda', icon: 'bi-house-door', to: '/warga/home', active: 'resident-home' },
-  { label: 'Surat', icon: 'bi-file-earmark-text', to: '/warga/surat', active: 'resident-letter' },
-  { label: 'Keluarga', icon: 'bi-people', to: '/warga/keluarga', active: 'resident-family' },
-  { label: 'Iuran', icon: 'bi-receipt', to: '/warga/iuran', active: 'resident-fees' },
-  { label: 'Profil', icon: 'bi-person', to: '/warga/profil', active: 'resident-profile' },
+const navigation = [
+  { label: 'Beranda', icon: 'bi-house-door', to: '/rt/home', activePrefix: '/rt/home' },
+  { label: 'Warga', icon: 'bi-people', to: '/rt/warga/pendaftaran', activePrefix: '/rt/warga' },
+  { label: 'Surat', icon: 'bi-file-earmark-text', to: '/rt/surat/masuk', activePrefix: '/rt/surat' },
+  { label: 'Iuran', icon: 'bi-receipt', to: '/rt/iuran/saya', activePrefix: '/rt/iuran' },
+  { label: 'Saya', icon: 'bi-person', to: '/rt/saya', activePrefix: '/rt/saya' },
 ]
 
-const rtNavigation = [
-  { label: 'Beranda', icon: 'bi-house-door', to: '/rt/home', active: 'rt-home' },
-  { label: 'Persetujuan', icon: 'bi-file-earmark-text', to: '/rt/persetujuan', active: 'rt-approvals' },
-  { label: 'Data Warga', icon: 'bi-people', to: '/rt/perubahan-data', active: 'rt-data-review' },
-  { label: 'Iuran', icon: 'bi-receipt', to: '/rt/tagihan', active: 'rt-fee' },
-  { label: 'Profil', icon: 'bi-person', to: '/rt/profil', active: 'rt-profile' },
-]
-
-const navigation = computed(() => (role.value === 'rt' ? rtNavigation : residentNavigation))
+function isActive(item) {
+  return route.path === item.activePrefix || route.path.startsWith(`${item.activePrefix}/`)
+}
 
 function goBack() {
   if (window.history.state?.back) {
     router.back()
     return
   }
-  router.push(role.value === 'rt' ? '/rt/home' : '/warga/home')
+  router.push('/rt/home')
 }
 </script>
 
@@ -44,19 +35,18 @@ function goBack() {
         aria-label="Kembali"
         @click="goBack"
       >
-        <i class="bi bi-arrow-left"></i>
+        <i class="bi bi-arrow-left" aria-hidden="true"></i>
       </button>
-      <button
+      <RouterLink
         v-else
+        to="/rt/notifikasi"
         class="header-icon"
-        type="button"
         aria-label="Buka notifikasi"
-        @click="router.push(role === 'rt' ? '/rt/persetujuan' : '/warga/notifikasi')"
       >
-        <i class="bi bi-bell"></i>
-      </button>
+        <i class="bi bi-bell" aria-hidden="true"></i>
+      </RouterLink>
 
-      <span class="header-title">{{ route.meta.title || 'Layanan RT' }}</span>
+      <span class="header-title">{{ route.meta.title || 'Aplikasi RT' }}</span>
       <span class="header-spacer"></span>
     </header>
 
@@ -64,15 +54,16 @@ function goBack() {
       <RouterView />
     </main>
 
-    <nav class="bottom-navigation" :aria-label="`Navigasi ${role === 'rt' ? 'RT' : 'Warga'}`">
+    <nav class="bottom-navigation" aria-label="Navigasi RT">
       <RouterLink
         v-for="item in navigation"
         :key="item.label"
         :to="item.to"
         class="bottom-navigation-item"
-        :class="{ active: route.path === item.to || route.path.startsWith(`${item.to}/`) }"
+        :class="{ active: isActive(item) }"
+        :aria-current="isActive(item) ? 'page' : undefined"
       >
-        <i class="bi" :class="item.icon"></i>
+        <i class="bi" :class="item.icon" aria-hidden="true"></i>
         <span>{{ item.label }}</span>
       </RouterLink>
     </nav>

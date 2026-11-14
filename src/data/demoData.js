@@ -65,10 +65,25 @@ export const dataChanges = [
   { id: 'CHG-2025-03', person: 'Dewi Lestari', nik: '3201••••••••0044', change: 'Perubahan Nomor HP', before: '08•••1234', after: '08•••5678', date: '20 Okt 2025 · 13:10', status: 'Menunggu Verifikasi' },
 ]
 
+export const residentRegistrations = [
+  {
+    id: 'REG-CONTOH-01',
+    name: 'Pendaftar Contoh A',
+    nik: 'NIK contoh',
+    familyNumber: 'Nomor KK contoh',
+    phone: 'Nomor HP contoh',
+    address: 'Alamat contoh wilayah RT',
+    date: 'Waktu pendaftaran contoh',
+    status: 'Menunggu Konfirmasi',
+    reviewNote: '',
+  },
+]
+
 export const demoState = reactive({
   applications: [...residentApplications],
   rtApplications: [...rtApplications],
   dataChanges: [...dataChanges],
+  residentRegistrations: [...residentRegistrations],
   bills: [...residentBills],
   notificationsRead: false,
   lastDemoNotice: '',

@@ -1,8 +1,9 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue'
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRoute } from 'vue-router'
+import { RT_DEVICE_CODE_STORAGE_KEY } from '../constants'
 
-const storageKey = 'rt-device-code'
+const route = useRoute()
 const deviceCode = ref('')
 const statusTitle = ref('Kode perangkat belum dibuat')
 const statusMessage = ref('Buat kode perangkat, lalu kirim ke admin RT untuk didaftarkan.')
@@ -18,7 +19,7 @@ const whatsappUrl = computed(() => {
 
 onMounted(() => {
   try {
-    deviceCode.value = window.localStorage.getItem(storageKey) || ''
+    deviceCode.value = window.localStorage.getItem(RT_DEVICE_CODE_STORAGE_KEY) || ''
   } catch {
     feedback.value = 'Penyimpanan perangkat tidak tersedia. Kode yang dibuat hanya akan berlaku selama aplikasi terbuka.'
     feedbackType.value = 'warning'
@@ -27,6 +28,9 @@ onMounted(() => {
   if (deviceCode.value) {
     statusTitle.value = 'Status belum diperiksa'
     statusMessage.value = 'Kode perangkat ditemukan. Periksa status setelah admin mendaftarkannya.'
+  } else if (route.query.deactivated === '1') {
+    statusTitle.value = 'Akun dinonaktifkan di perangkat ini'
+    statusMessage.value = 'Kode lokal telah dihapus. Untuk menggunakan aplikasi lagi, buat kode perangkat dan minta admin mendaftarkannya.'
   }
 })
 
@@ -59,7 +63,7 @@ function createDeviceCode() {
   feedback.value = ''
 
   try {
-    window.localStorage.setItem(storageKey, code)
+    window.localStorage.setItem(RT_DEVICE_CODE_STORAGE_KEY, code)
   } catch {
     feedback.value = 'Kode dibuat untuk sesi ini, tetapi tidak dapat disimpan di perangkat.'
     feedbackType.value = 'warning'
