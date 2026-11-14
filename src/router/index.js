@@ -33,6 +33,7 @@ const router = createRouter({
         { path: 'surat/detail', name: 'resident-letter-detail', component: () => import('../views/ResidentServiceView.vue'), meta: { title: 'Detail Pengajuan Surat', role: 'warga', showBack: true } },
         { path: 'surat/preview', name: 'resident-letter-preview', component: () => import('../views/ResidentServiceView.vue'), meta: { title: 'Preview Surat', role: 'warga', showBack: true } },
         { path: 'notifikasi', name: 'resident-notifications', component: () => import('../views/ResidentNotificationsView.vue'), meta: { title: 'Notifikasi & Pengingat', role: 'warga' } },
+        { path: 'profil', name: 'resident-profile', component: () => import('../views/ProfileView.vue'), meta: { title: 'Profil Saya', role: 'warga' } },
       ],
     },
     {
@@ -45,6 +46,7 @@ const router = createRouter({
         { path: 'tagihan', name: 'rt-fee', component: () => import('../views/RtFeeView.vue'), meta: { title: 'Buat Tagihan Iuran', role: 'rt', showBack: true } },
         { path: 'persetujuan', name: 'rt-approvals', component: () => import('../views/RtApprovalsView.vue'), meta: { title: 'Persetujuan Surat', role: 'rt' } },
         { path: 'perubahan-data', name: 'rt-data-review', component: () => import('../views/RtDataReviewView.vue'), meta: { title: 'Peninjauan Perubahan Data', role: 'rt' } },
+        { path: 'profil', name: 'rt-profile', component: () => import('../views/ProfileView.vue'), meta: { title: 'Profil Saya', role: 'rt' } },
       ],
     },
     {

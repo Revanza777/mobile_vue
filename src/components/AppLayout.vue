@@ -11,16 +11,16 @@ const residentNavigation = [
   { label: 'Beranda', icon: 'bi-house-door', to: '/warga/home', active: 'resident-home' },
   { label: 'Surat', icon: 'bi-file-earmark-text', to: '/warga/surat', active: 'resident-letter' },
   { label: 'Keluarga', icon: 'bi-people', to: '/warga/keluarga', active: 'resident-family' },
-  { label: 'Notifikasi', icon: 'bi-bell', to: '/warga/notifikasi', active: 'resident-notifications' },
-  { label: 'Profil', icon: 'bi-person', to: '/login', active: 'login' },
+  { label: 'Iuran', icon: 'bi-receipt', to: '/warga/iuran', active: 'resident-fees' },
+  { label: 'Profil', icon: 'bi-person', to: '/warga/profil', active: 'resident-profile' },
 ]
 
 const rtNavigation = [
   { label: 'Beranda', icon: 'bi-house-door', to: '/rt/home', active: 'rt-home' },
-  { label: 'Surat', icon: 'bi-file-earmark-text', to: '/rt/persetujuan', active: 'rt-approvals' },
-  { label: 'Keluarga', icon: 'bi-people', to: '/rt/perubahan-data', active: 'rt-data-review' },
+  { label: 'Persetujuan', icon: 'bi-file-earmark-text', to: '/rt/persetujuan', active: 'rt-approvals' },
+  { label: 'Data Warga', icon: 'bi-people', to: '/rt/perubahan-data', active: 'rt-data-review' },
   { label: 'Iuran', icon: 'bi-receipt', to: '/rt/tagihan', active: 'rt-fee' },
-  { label: 'Profil', icon: 'bi-person', to: '/login', active: 'login' },
+  { label: 'Profil', icon: 'bi-person', to: '/rt/profil', active: 'rt-profile' },
 ]
 
 const navigation = computed(() => (role.value === 'rt' ? rtNavigation : residentNavigation))
@@ -53,20 +53,11 @@ function goBack() {
         aria-label="Buka notifikasi"
         @click="router.push(role === 'rt' ? '/rt/persetujuan' : '/warga/notifikasi')"
       >
-        <i class="bi bi-list"></i>
+        <i class="bi bi-bell"></i>
       </button>
 
       <span class="header-title">{{ route.meta.title || 'Layanan RT' }}</span>
-      <button
-        v-if="route.meta.showBell"
-        class="header-icon"
-        type="button"
-        aria-label="Lihat notifikasi"
-        @click="router.push(role === 'rt' ? '/rt/persetujuan' : '/warga/notifikasi')"
-      >
-        <i class="bi bi-bell"></i>
-      </button>
-      <span v-else class="header-spacer"></span>
+      <span class="header-spacer"></span>
     </header>
 
     <main class="app-content">
